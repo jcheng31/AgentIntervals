@@ -29,6 +29,24 @@ namespace AgentIntervals
         {
             return ((Microsoft.SPOT.Font)(Microsoft.SPOT.ResourceUtility.GetObject(ResourceManager, id)));
         }
+        internal static byte[] GetBytes(Resources.BinaryResources id)
+        {
+            return ((byte[])(Microsoft.SPOT.ResourceUtility.GetObject(ResourceManager, id)));
+        }
+        [System.SerializableAttribute()]
+        internal enum BinaryResources : short
+        {
+            _4 = -27537,
+            _3 = -27182,
+            _9 = -25976,
+            _5 = -20947,
+            _0 = -17311,
+            _2 = -7970,
+            _1 = 10775,
+            _6 = 26632,
+            _7 = 31244,
+            _8 = 31885,
+        }
         [System.SerializableAttribute()]
         internal enum FontResources : short
         {

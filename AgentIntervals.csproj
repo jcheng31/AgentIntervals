@@ -57,4 +57,34 @@
     <None Include="Resources\NinaB.tinyfnt" />
     <None Include="Resources\small.tinyfnt" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\_0.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\_1.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\_2.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\_3.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\_4.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\_5.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\_6.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\_7.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\_8.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\_9.gif" />
+  </ItemGroup>
 </Project>
