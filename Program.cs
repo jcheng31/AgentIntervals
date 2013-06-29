@@ -99,10 +99,7 @@ namespace AgentIntervals
         {
             Font fontConsolaMonoBold32 = Resources.GetFont(Resources.FontResources.ConsolaMonoBold32);
 
-            int tens = digit/10;
-            int ones = digit%10;
-
-            String digitText = tens.ToString() + ones.ToString();
+            String digitText = digit.ToString("D2");
             _display.DrawText(digitText, fontConsolaMonoBold32, Color.White, 40, 32);
         }
     }
