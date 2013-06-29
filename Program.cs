@@ -11,16 +11,35 @@ namespace AgentIntervals
     {
         static Bitmap _display;
 
+        static int _secondsLeft = 99;
+
         public static void Main()
         {
             // initialize display buffer
             _display = new Bitmap(Bitmap.MaxWidth, Bitmap.MaxHeight);
 
-            // sample "hello world" code
+            Timer secondTimer = new Timer(SecondTimerCallback, null, 0, 1000);
+
+            // go to sleep; all further code should be timer-driven or event-driven
+            Thread.Sleep(Timeout.Infinite);
+        }
+
+        private static void SecondTimerCallback(object state)
+        {
+            DrawDisplay(_secondsLeft);
+            _secondsLeft--;
+        }
+
+        private static void DrawDisplay(int secondsLeft)
+        {
             _display.Clear();
             Font fontNinaB = Resources.GetFont(Resources.FontResources.NinaB);
-            _display.DrawText("Hello world.", fontNinaB, Color.White, 10, 64);
+            _display.DrawText("Short Interval", fontNinaB, Color.White, 20, 5);
+
+            DrawDigitOnBitmap(secondsLeft);
+
             _display.Flush();
+        }
 
 
         static void DrawDigitOnBitmap(int digit)
