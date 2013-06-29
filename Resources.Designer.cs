@@ -52,6 +52,7 @@ namespace AgentIntervals
         {
             small = 13070,
             NinaB = 18060,
+            ConsolaMonoBold32 = 31709,
         }
     }
 }

@@ -154,4 +154,7 @@
   <data name="_9" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\_9.gif;System.Byte[], mscorlib, Version=4.3.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
+  <data name="ConsolaMonoBold32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ConsolaMonoBold32.tinyfnt;System.Byte[], mscorlib, Version=4.3.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
 </root>
