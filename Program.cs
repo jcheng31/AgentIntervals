@@ -11,7 +11,19 @@ namespace AgentIntervals
     {
         static Bitmap _display;
 
-        static int _secondsLeft = 99;
+        private const int LongIntervalTime = 30;
+        private const int MediumIntervalTime = 20;
+        private const int ShortIntervalTime = 10;
+
+        private static int _secondsLeft = ShortIntervalTime;
+        private static IntervalType _type;
+
+        enum IntervalType
+        {
+            ShortInterval,
+            MediumInterval,
+            LongInterval
+        }
 
         public static void Main()
         {
@@ -28,24 +40,62 @@ namespace AgentIntervals
         {
             DrawDisplay(_secondsLeft);
             _secondsLeft--;
+
+            if (_secondsLeft <= 0)
+            {
+                _type = (IntervalType)((int)(_type + 1) % 3);
+
+                switch (_type)
+                {
+                    case IntervalType.LongInterval:
+                        _secondsLeft = LongIntervalTime;
+                        break;
+                    case IntervalType.MediumInterval:
+                        _secondsLeft = MediumIntervalTime;
+                        break;
+                    case IntervalType.ShortInterval:
+                        _secondsLeft = ShortIntervalTime;
+                        break;
+                }
+            }
+
+
         }
 
         private static void DrawDisplay(int secondsLeft)
         {
             _display.Clear();
-            Font fontNinaB = Resources.GetFont(Resources.FontResources.NinaB);
-            _display.DrawText("Short Interval", fontNinaB, Color.White, 20, 5);
 
-            DrawDigitOnBitmap(secondsLeft);
+            DrawIntervalType();
+            DrawSeconds(secondsLeft);
 
             _display.Flush();
         }
 
-
-        static void DrawDigitOnBitmap(int digit)
+        private static void DrawIntervalType()
         {
-            int onesDigit = digit%10;
-            int tensDigit = digit/10;
+            Font fontNinaB = Resources.GetFont(Resources.FontResources.NinaB);
+            String intervalType = null;
+            switch (_type)
+            {
+                case IntervalType.LongInterval:
+                    intervalType = "Low Intensity";
+                    break;
+                case IntervalType.MediumInterval:
+                    intervalType = "Moderate Intensity";
+                    break;
+                case IntervalType.ShortInterval:
+                    intervalType = "High Intensity";
+                    break;
+            }
+            _display.DrawText(intervalType, fontNinaB, Color.White, 20, 5);
+        }
+
+
+        static void DrawSeconds(int digit)
+        {
+            int onesDigit = digit % 10;
+            int tensDigit = digit / 10;
             _display.DrawImage(64, 32, GetDigit(onesDigit), 12, 0, 40, 64);
             _display.DrawImage(24, 32, GetDigit(tensDigit), 12, 0, 40, 64);
         }
