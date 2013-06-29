@@ -76,6 +76,7 @@ namespace AgentIntervals
         {
             Font fontNinaB = Resources.GetFont(Resources.FontResources.NinaB);
             String intervalType = null;
+            int leftMargin = 20;
             switch (_type)
             {
                 case IntervalType.LongInterval:
@@ -83,12 +84,14 @@ namespace AgentIntervals
                     break;
                 case IntervalType.MediumInterval:
                     intervalType = "Moderate Intensity";
+                    leftMargin = 2;
                     break;
                 case IntervalType.ShortInterval:
                     intervalType = "High Intensity";
+                    leftMargin = 18;
                     break;
             }
-            _display.DrawText(intervalType, fontNinaB, Color.White, 20, 5);
+            _display.DrawText(intervalType, fontNinaB, Color.White, leftMargin, 15);
         }
 
 
