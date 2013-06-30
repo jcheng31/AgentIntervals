@@ -51,7 +51,7 @@ namespace AgentIntervals
             _downButton.OnInterrupt += ResetCounter;
             _upButton.OnInterrupt += ToggleTimer;
 
-            ResetTimer();
+            StartTimer();
 
             // go to sleep; all further code should be timer-driven or event-driven
             Thread.Sleep(Timeout.Infinite);
@@ -71,7 +71,7 @@ namespace AgentIntervals
 
         private static void StartTimer()
         {
-            _countdownTimer = new Timer(SecondTimerCallback, null, 0, 1000);
+            _countdownTimer = new Timer(SecondTimerCallback, null, 1000, 1000);
         }
 
         private static void ResetCounter(uint data1, uint data2, DateTime time)
