@@ -172,7 +172,13 @@ namespace AgentIntervals
 
         static void DrawSeconds(int digit)
         {
-            _display.DrawText(digit.ToString("D2"), _fontConsolaMonoBold32, Color.White, 40, 32);
+            String timeLeft = digit.ToString("D2");
+            int width, height;
+            _fontConsolaMonoBold32.ComputeExtent(timeLeft, out width, out height);
+
+            int leftMargin = (128 - width)/2;
+
+            _display.DrawText(timeLeft, _fontConsolaMonoBold32, Color.White, leftMargin, 32);
         }
     }
 }
