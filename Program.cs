@@ -1,7 +1,6 @@
 ﻿using System;
 using Microsoft.SPOT;
 using Microsoft.SPOT.Hardware;
-using Microsoft.SPOT.Presentation;
 using Microsoft.SPOT.Presentation.Media;
 using System.Threading;
 
@@ -151,7 +150,6 @@ namespace AgentIntervals
         private static void DrawIntervalType()
         {
             String intervalType = null;
-            int leftMargin = 20;
             switch (_currentIntervalType)
             {
                 case IntervalType.LongInterval:
@@ -159,13 +157,17 @@ namespace AgentIntervals
                     break;
                 case IntervalType.MediumInterval:
                     intervalType = "Moderate Intensity";
-                    leftMargin = 2;
                     break;
                 case IntervalType.ShortInterval:
                     intervalType = "High Intensity";
-                    leftMargin = 18;
                     break;
             }
+
+            int width, height;
+            _fontNinaB.ComputeExtent(intervalType, out width, out height);
+
+            int leftMargin = (128 - width) / 2 + 2;
+
             _display.DrawText(intervalType, _fontNinaB, Color.White, leftMargin, 15);
         }
 
