@@ -9,3 +9,8 @@ An interval-running timer for the [AGENT Smartwatch](http://www.agentwatches.com
 * Automatic breaks (with customisable duration)
 * **(If Supported by SDK)** Vibrate the watch when interval elapses
 * Switch between the current (fast, medium, slow) interval system and a normal (fast, slow) one
+
+## License
+AgentIntervals is available under the MIT License.
+
+Consola Mono Bold is used under the SIL Open Font License (included in this repo.)
