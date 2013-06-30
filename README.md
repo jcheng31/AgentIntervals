@@ -5,7 +5,6 @@ An interval-running timer for the [AGENT Smartwatch](http://www.agentwatches.com
 
 ## Roadmap
 * User-adjustable interval timings
-* Ability to pause/stop/restart the timer
 * Automatic breaks (with customisable duration)
 * **(If Supported by SDK)** Vibrate the watch when interval elapses
 * Switch between the current (fast, medium, slow) interval system and a normal (fast, slow) one

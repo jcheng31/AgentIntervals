@@ -133,8 +133,6 @@ namespace AgentIntervals
                         break;
                 }
             }
-
-
         }
 
         private static void DrawDisplay(int secondsLeft)
