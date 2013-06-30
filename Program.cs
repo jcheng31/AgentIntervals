@@ -24,6 +24,9 @@ namespace AgentIntervals
 
         private static Timer _countdownTimer;
 
+        private static Font _fontNinaB;
+        private static Font _fontConsolaMonoBold32;
+
         enum IntervalType
         {
             ShortInterval,
@@ -41,6 +44,11 @@ namespace AgentIntervals
             _selectButton = new InterruptPort(HardwareProvider.HwProvider.GetButtonPins(Button.VK_SELECT), false, Port.ResistorMode.PullDown, Port.InterruptMode.InterruptEdgeLow);
             _downButton = new InterruptPort(HardwareProvider.HwProvider.GetButtonPins(Button.VK_DOWN), false, Port.ResistorMode.PullDown, Port.InterruptMode.InterruptEdgeLow);
 
+            // Get our fonts.
+            _fontConsolaMonoBold32 = Resources.GetFont(Resources.FontResources.ConsolaMonoBold32);
+            _fontNinaB = Resources.GetFont(Resources.FontResources.NinaB);
+
+            // Set up button actions.
             _downButton.OnInterrupt += ResetCounter;
             _upButton.OnInterrupt += ToggleTimer;
 
@@ -142,7 +150,6 @@ namespace AgentIntervals
 
         private static void DrawIntervalType()
         {
-            Font fontNinaB = Resources.GetFont(Resources.FontResources.NinaB);
             String intervalType = null;
             int leftMargin = 20;
             switch (_currentIntervalType)
@@ -159,16 +166,13 @@ namespace AgentIntervals
                     leftMargin = 18;
                     break;
             }
-            _display.DrawText(intervalType, fontNinaB, Color.White, leftMargin, 15);
+            _display.DrawText(intervalType, _fontNinaB, Color.White, leftMargin, 15);
         }
 
 
         static void DrawSeconds(int digit)
         {
-            Font fontConsolaMonoBold32 = Resources.GetFont(Resources.FontResources.ConsolaMonoBold32);
-
-            String digitText = digit.ToString("D2");
-            _display.DrawText(digitText, fontConsolaMonoBold32, Color.White, 40, 32);
+            _display.DrawText(digit.ToString("D2"), _fontConsolaMonoBold32, Color.White, 40, 32);
         }
     }
 }
