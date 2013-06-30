@@ -42,11 +42,29 @@ namespace AgentIntervals
             _downButton = new InterruptPort(HardwareProvider.HwProvider.GetButtonPins(Button.VK_DOWN), false, Port.ResistorMode.PullDown, Port.InterruptMode.InterruptEdgeLow);
 
             _downButton.OnInterrupt += ResetCounter;
+            _upButton.OnInterrupt += ToggleTimer;
 
             ResetTimer();
 
             // go to sleep; all further code should be timer-driven or event-driven
             Thread.Sleep(Timeout.Infinite);
+        }
+
+        private static void ToggleTimer(uint data1, uint data2, DateTime time)
+        {
+            if (_countdownTimer == null)
+            {
+                StartTimer();
+            }
+            else
+            {
+                StopTimer();
+            }
+        }
+
+        private static void StartTimer()
+        {
+            _countdownTimer = new Timer(SecondTimerCallback, null, 0, 1000);
         }
 
         private static void ResetCounter(uint data1, uint data2, DateTime time)
@@ -65,16 +83,25 @@ namespace AgentIntervals
             }
 
             DrawDisplay(_secondsLeft);
-            ResetTimer();
+            if (_countdownTimer != null)
+            {
+                ResetTimer();
+            }
         }
 
         private static void ResetTimer()
         {
+            StopTimer();
+            StartTimer();
+        }
+
+        private static void StopTimer()
+        {
             if (_countdownTimer != null)
             {
                 _countdownTimer.Dispose();
+                _countdownTimer = null;
             }
-            _countdownTimer = new Timer(SecondTimerCallback, null, 0, 1000);
         }
 
         private static void SecondTimerCallback(object state)
