@@ -10,9 +10,9 @@ namespace AgentIntervals
     {
         static Bitmap _display;
 
-        private const int LongIntervalTime = 30;
-        private const int MediumIntervalTime = 20;
-        private const int ShortIntervalTime = 10;
+        private static int LongIntervalTime = 30;
+        private static int MediumIntervalTime = 20;
+        private static int ShortIntervalTime = 10;
 
         private static int _secondsLeft = LongIntervalTime;
         private static IntervalType _currentIntervalType;
