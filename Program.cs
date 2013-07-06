@@ -71,7 +71,7 @@ namespace AgentIntervals
 
         private static void StartTimer()
         {
-            _countdownTimer = new Timer(SecondTimerCallback, null, 1000, 1000);
+            _countdownTimer = new Timer(SecondTimerCallback, null, 250, 1000);
         }
 
         private static void ResetCounter(uint data1, uint data2, DateTime time)
@@ -113,8 +113,8 @@ namespace AgentIntervals
 
         private static void SecondTimerCallback(object state)
         {
-            DrawDisplay(_secondsLeft);
             _secondsLeft--;
+            DrawDisplay(_secondsLeft);
 
             if (_secondsLeft <= 0)
             {
