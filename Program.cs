@@ -48,13 +48,40 @@ namespace AgentIntervals
             _fontNinaB = Resources.GetFont(Resources.FontResources.NinaB);
 
             // Set up button actions.
-            _downButton.OnInterrupt += ResetCounter;
-            _upButton.OnInterrupt += ToggleTimer;
+            SetStartStopButtons();
 
             DrawDisplay(_secondsLeft);
 
             // go to sleep; all further code should be timer-driven or event-driven
             Thread.Sleep(Timeout.Infinite);
+        }
+
+        private static void SetStartStopButtons()
+        {
+            _downButton.OnInterrupt -= AdjustTimeDown;
+            _upButton.OnInterrupt -= AdjustTimeUp;
+
+            _downButton.OnInterrupt += ResetCounter;
+            _upButton.OnInterrupt += ToggleTimer;
+        }
+
+        private static void SetUpDownButtons()
+        {
+            _downButton.OnInterrupt -= ResetCounter;
+            _upButton.OnInterrupt -= ToggleTimer;
+
+            _downButton.OnInterrupt += AdjustTimeDown;
+            _upButton.OnInterrupt += AdjustTimeUp;
+        }
+
+        private static void AdjustTimeUp(uint data1, uint data2, DateTime time)
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void AdjustTimeDown(uint data1, uint data2, DateTime time)
+        {
+            throw new NotImplementedException();
         }
 
         private static void ToggleTimer(uint data1, uint data2, DateTime time)
