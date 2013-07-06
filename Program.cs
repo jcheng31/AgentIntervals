@@ -14,7 +14,7 @@ namespace AgentIntervals
         private const int MediumIntervalTime = 20;
         private const int ShortIntervalTime = 10;
 
-        private static int _secondsLeft = ShortIntervalTime;
+        private static int _secondsLeft = LongIntervalTime;
         private static IntervalType _currentIntervalType;
 
         private static InterruptPort _upButton;
@@ -28,9 +28,9 @@ namespace AgentIntervals
 
         enum IntervalType
         {
-            ShortInterval,
+            LongInterval,
             MediumInterval,
-            LongInterval
+            ShortInterval
         }
 
         public static void Main()
@@ -51,7 +51,7 @@ namespace AgentIntervals
             _downButton.OnInterrupt += ResetCounter;
             _upButton.OnInterrupt += ToggleTimer;
 
-            StartTimer();
+            DrawDisplay(_secondsLeft);
 
             // go to sleep; all further code should be timer-driven or event-driven
             Thread.Sleep(Timeout.Infinite);
