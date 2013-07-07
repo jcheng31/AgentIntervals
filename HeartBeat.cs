@@ -26,6 +26,11 @@ namespace AgentIntervals
             }
         }
 
+        public void Start()
+        {
+            Start(0);
+        }
+
         public void Start(int delay)
         {
             if (_timer != null) return;
@@ -39,6 +44,11 @@ namespace AgentIntervals
 
             _timer.Dispose();
             _timer = null;
+        }
+
+        public bool Toggle()
+        {
+            return Toggle(0);
         }
 
         public bool Toggle(int delay)
@@ -59,8 +69,13 @@ namespace AgentIntervals
 
         public void Reset()
         {
+            Reset(0);
+        }
+
+        public void Reset(int delay)
+        {
             Stop();
-            Start(0);
+            Start(delay);
         }
 
         public void ChangePeriod(int newPeriod)
