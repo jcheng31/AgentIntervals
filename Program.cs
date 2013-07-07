@@ -21,11 +21,12 @@ namespace AgentIntervals
         private static InterruptPort _selectButton;
         private static InterruptPort _downButton;
 
-        private static Timer _timer;
+        private static HeartBeat _clock;
 
         private static Font _fontNinaB;
         private static Font _fontConsolaMonoBold32;
 
+        private static bool _isInAdjustMode = false;
         private static bool _shouldDrawTime = true;
 
         enum IntervalType
@@ -49,6 +50,9 @@ namespace AgentIntervals
             _fontConsolaMonoBold32 = Resources.GetFont(Resources.FontResources.ConsolaMonoBold32);
             _fontNinaB = Resources.GetFont(Resources.FontResources.NinaB);
 
+            _clock = new HeartBeat(1000);
+            _clock.OnHeartBeat += TimerTickHandler;
+
             EnterTimerMode();
 
             // go to sleep; all further code should be timer-driven or event-driven
@@ -57,6 +61,7 @@ namespace AgentIntervals
 
         private static void EnterTimerMode()
         {
+            _isInAdjustMode = false;
             StopTimer();
             SetTimerModeButtons();
             _currentIntervalType = IntervalType.LongInterval;
@@ -66,38 +71,14 @@ namespace AgentIntervals
 
         private static void EnterAdjustMode(uint data1, uint data2, DateTime time)
         {
-            StopTimer();
+            _isInAdjustMode = true;
+            _clock.Stop();
             SetAdjustModeButtons();
 
             _currentIntervalType = IntervalType.LongInterval;
 
-            _timer = new Timer(AdjustModeTimerCallback, null, 0, 250);
-        }
-
-        private static void AdjustModeTimerCallback(object state)
-        {
-            _display.Clear();
-
-            DrawIntervalType();
-
-            if (_shouldDrawTime)
-            {
-                switch (_currentIntervalType)
-                {
-                    case IntervalType.LongInterval:
-                        DrawSeconds(LongIntervalTime);
-                        break;
-                    case IntervalType.MediumInterval:
-                        DrawSeconds(MediumIntervalTime);
-                        break;
-                    case IntervalType.ShortInterval:
-                        DrawSeconds(ShortIntervalTime);
-                        break;
-                }
-            }
-            _shouldDrawTime = !_shouldDrawTime;
-
-            _display.Flush();
+            _clock.ChangePeriod(250);
+            _clock.Start(0);
         }
 
         private static void SetTimerModeButtons()
@@ -154,20 +135,15 @@ namespace AgentIntervals
 
         private static void ToggleTimer(uint data1, uint data2, DateTime time)
         {
-            if (_timer == null)
+            bool isRunning = _clock.Toggle(250);
+            if (isRunning)
             {
-                StartTimer();
+                _downButton.OnInterrupt -= ResetCounter;
             }
             else
             {
-                StopTimer();
+                _downButton.OnInterrupt += ResetCounter;
             }
-        }
-
-        private static void StartTimer()
-        {
-            _timer = new Timer(SecondTimerCallback, null, 250, 1000);
-            _selectButton.OnInterrupt -= EnterAdjustMode;
         }
 
         private static void ResetCounter(uint data1, uint data2, DateTime time)
@@ -186,49 +162,62 @@ namespace AgentIntervals
             }
 
             DrawTimerDisplay(_secondsLeft);
-            if (_timer != null)
-            {
-                ResetTimer();
-            }
-        }
-
-        private static void ResetTimer()
-        {
-            StopTimer();
-            StartTimer();
         }
 
         private static void StopTimer()
         {
-            if (_timer != null)
-            {
-                _timer.Dispose();
-                _timer = null;
-            }
-
+            _clock.Stop();
             _selectButton.OnInterrupt += EnterAdjustMode;
         }
 
-        private static void SecondTimerCallback(object state)
+        private static void TimerTickHandler(object sender, EventArgs e)
         {
-            _secondsLeft--;
-            DrawTimerDisplay(_secondsLeft);
-
-            if (_secondsLeft <= 0)
+            if (_isInAdjustMode)
             {
-                _currentIntervalType = (IntervalType)((int)(_currentIntervalType + 1) % 3);
+                _display.Clear();
 
-                switch (_currentIntervalType)
+                DrawIntervalType();
+
+                if (_shouldDrawTime)
                 {
-                    case IntervalType.LongInterval:
-                        _secondsLeft = LongIntervalTime;
-                        break;
-                    case IntervalType.MediumInterval:
-                        _secondsLeft = MediumIntervalTime;
-                        break;
-                    case IntervalType.ShortInterval:
-                        _secondsLeft = ShortIntervalTime;
-                        break;
+                    switch (_currentIntervalType)
+                    {
+                        case IntervalType.LongInterval:
+                            DrawSeconds(LongIntervalTime);
+                            break;
+                        case IntervalType.MediumInterval:
+                            DrawSeconds(MediumIntervalTime);
+                            break;
+                        case IntervalType.ShortInterval:
+                            DrawSeconds(ShortIntervalTime);
+                            break;
+                    }
+                }
+                _shouldDrawTime = !_shouldDrawTime;
+
+                _display.Flush();
+            }
+            else
+            {
+                _secondsLeft--;
+                DrawTimerDisplay(_secondsLeft);
+
+                if (_secondsLeft <= 0)
+                {
+                    _currentIntervalType = (IntervalType)((int)(_currentIntervalType + 1) % 3);
+
+                    switch (_currentIntervalType)
+                    {
+                        case IntervalType.LongInterval:
+                            _secondsLeft = LongIntervalTime;
+                            break;
+                        case IntervalType.MediumInterval:
+                            _secondsLeft = MediumIntervalTime;
+                            break;
+                        case IntervalType.ShortInterval:
+                            _secondsLeft = ShortIntervalTime;
+                            break;
+                    }
                 }
             }
         }
