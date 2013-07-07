@@ -1,4 +1,5 @@
 ﻿using System;
+using MicroHeartBeat;
 using Microsoft.SPOT;
 using Microsoft.SPOT.Hardware;
 using Microsoft.SPOT.Presentation.Media;
