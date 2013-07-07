@@ -81,6 +81,11 @@ namespace AgentIntervals
         public void ChangePeriod(int newPeriod)
         {
             _period = newPeriod;
+
+            if (_timer != null)
+            {
+                Reset();
+            }
         }
     }
 }
