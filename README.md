@@ -9,7 +9,7 @@ An interval-running timer for the [AGENT Smartwatch](http://www.agentwatches.com
 * **(If Supported by SDK)** Vibrate the watch when interval elapses
 * Switch between the current (fast, medium, slow) interval system and a normal (fast, slow) one
 
-## License
-AgentIntervals is available under the MIT License.
+## License Stuff
+**AgentIntervals** is available under the MIT License. It makes use of [MicroHeartBeat](https://github.com/jcheng31/MicroHeartBeat), also available under the MIT License.
 
-Consola Mono Bold is used under the SIL Open Font License (included in this repo.)
+**Consola Mono Bold** is used under the SIL Open Font License (included in this repo.)
