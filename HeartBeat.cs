@@ -41,6 +41,28 @@ namespace AgentIntervals
             _timer = null;
         }
 
+        public bool Toggle(int delay)
+        {
+            bool started;
+            if (_timer == null)
+            {
+                Start(delay);
+                started = true;
+            }
+            else
+            {
+                Stop();
+                started = false;
+            }
+            return started;
+        }
+
+        public void Reset()
+        {
+            Stop();
+            Start(0);
+        }
+
         public void ChangePeriod(int newPeriod)
         {
             _period = newPeriod;
