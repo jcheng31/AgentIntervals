@@ -101,6 +101,7 @@ namespace AgentIntervals
 
             _downButton.OnInterrupt += AdjustTimeDown;
             _upButton.OnInterrupt += AdjustTimeUp;
+            _selectButton.OnInterrupt += CycleIntervalTypes;
         }
 
         private static void AdjustTimeUp(uint data1, uint data2, DateTime time)
@@ -164,6 +165,17 @@ namespace AgentIntervals
             }
 
             DrawTimerDisplay(_secondsLeft);
+        }
+
+        private static void CycleIntervalTypes(uint data1, uint data2, DateTime time)
+        {
+            if (_currentIntervalType == IntervalType.ShortInterval)
+            {
+                EnterTimerMode();
+                return;
+            }
+
+            _currentIntervalType++;
         }
 
         private static void StopTimer()
