@@ -67,6 +67,7 @@ namespace AgentIntervals
             SetTimerModeButtons();
             _currentIntervalType = IntervalType.LongInterval;
             _secondsLeft = LongIntervalTime;
+            _clock.ChangePeriod(1000);
             DrawTimerDisplay(_secondsLeft);
         }
 
