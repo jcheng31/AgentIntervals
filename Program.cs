@@ -87,10 +87,10 @@ namespace AgentIntervals
         {
             _downButton.OnInterrupt -= AdjustTimeDown;
             _upButton.OnInterrupt -= AdjustTimeUp;
+            _selectButton.OnInterrupt -= CycleIntervalTypes;
 
             _downButton.OnInterrupt += ResetCounter;
             _upButton.OnInterrupt += ToggleTimer;
-            _selectButton.OnInterrupt += EnterAdjustMode;
         }
 
         private static void SetAdjustModeButtons()
